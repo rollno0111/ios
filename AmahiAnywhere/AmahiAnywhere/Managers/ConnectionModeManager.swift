@@ -30,9 +30,19 @@ class ConnectionModeManager {
     
     func setupReachability(_ hostName: String?) {
         if let hostName = hostName {
-            reachability = Reachability(hostname: hostName)
+            do {
+               reachability = try Reachability(hostname: hostName)
+            } catch {
+                print("Error while creating reachability object: \(error)")
+            }
+            
         } else {
-            reachability = Reachability()
+            do {
+               reachability = try Reachability()
+            } catch {
+                print("Error while creating reachability object: \(error)")
+            }
+            
         }
         
         NotificationCenter.default.addObserver(
