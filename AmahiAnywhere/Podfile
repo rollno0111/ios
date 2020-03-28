@@ -1,12 +1,9 @@
-#source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
-#platform :ios, '8.0'
 
 target 'AmahiAnywhere' do
 
 use_frameworks!
     pod 'Alamofire', '~> 4.7'
-#    pod 'Alamofire'
     pod 'MBProgressHUD'
     pod 'EVReflection/Alamofire'
     pod 'IQKeyboardManagerSwift'
