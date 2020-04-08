@@ -64,6 +64,11 @@ struct StringLiterals {
     
     static let INFO_DICTIONARY_KEY =            "CFBundleShortVersionString"
     
+    // Share Controller
+    
+    static let SHARE_ERROR_TITLE =               "Couldn't Share"
+    static let SHARE_ERROR_MESSAGE =             "Your Device Couldn't Share"
+    
     // App_id
     
     static let APP_ID =                         "761559919"

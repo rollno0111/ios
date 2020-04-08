@@ -12,6 +12,16 @@ class SettingsViewController: BaseUITableViewController, MFMailComposeViewContro
         tableView.reloadData()
     }
     
+    func showAlert(with title: String?, message: String?) {
+        let alertController = UIAlertController(title: title,
+                                              message: message,
+                                              preferredStyle: UIAlertController.Style.alert)
+        
+        alertController.addAction(UIAlertAction(title: StringLiterals.ALERT_ACTION, style: .default) { (action:UIAlertAction!) in
+        })
+        self.present(alertController, animated: true)
+    }
+    
     func configureMailComposeViewController(recipient: String,
                                             subject: String,
                                             message: String) ->MFMailComposeViewController {
@@ -23,16 +33,6 @@ class SettingsViewController: BaseUITableViewController, MFMailComposeViewContro
         mail.setMessageBody(message, isHTML: true)
         
         return mail
-    }
-    
-    func showSendMailErrorAlert() {
-        let sendMailAlert = UIAlertController(title: StringLiterals.MAIL_ERROR_TITLE,
-                                              message: StringLiterals.MAIL_ERROR_MESSAGE,
-                                              preferredStyle: UIAlertController.Style.alert)
-        
-        sendMailAlert.addAction(UIAlertAction(title: StringLiterals.ALERT_ACTION, style: .default) { (action:UIAlertAction!) in
-        })
-        self.present(sendMailAlert, animated: true)
     }
     
     func mailComposeController(_ controller:MFMailComposeViewController,
@@ -200,16 +200,16 @@ class SettingsViewController: BaseUITableViewController, MFMailComposeViewContro
                     if MFMailComposeViewController.canSendMail() {
                         self.present(mailVc, animated: true, completion: nil)
                     } else {
-                        self.showSendMailErrorAlert()
+                        self.showAlert(with: StringLiterals.MAIL_ERROR_TITLE, message: StringLiterals.MAIL_ERROR_MESSAGE)
                     }
                 } else if row == 3 {
-                    let mailVc = configureMailComposeViewController(recipient: "",
-                                                                    subject: StringLiterals.SHARE_SUBJECT,
-                                                                    message: StringLiterals.SHARE_MESSAGE)
-                    if MFMailComposeViewController.canSendMail() {
-                        self.present(mailVc, animated: true, completion: nil)
-                    } else {
-                        self.showSendMailErrorAlert()
+                    if let name = URL(string: "https://itunes.apple.com/us/app/myapp/id\(StringLiterals.APP_ID)?ls=1&mt=8"), !name.absoluteString.isEmpty {
+                        let objectsToShare = [name]
+                        let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+
+                        self.present(activityVC, animated: true, completion: nil)
+                    } else  {
+                        self.showAlert(with: StringLiterals.SHARE_ERROR_TITLE, message: StringLiterals.SHARE_ERROR_MESSAGE)
                     }
                 }
                 break
